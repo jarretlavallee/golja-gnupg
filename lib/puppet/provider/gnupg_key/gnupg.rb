@@ -126,7 +126,8 @@ Puppet::Type.type(:gnupg_key).provide(:gnupg) do
     else
       raise Puppet::Error, "Invalid trust value for key #{resource[:key_id]}: #{resource[:key_trust]}.  Supported values are 'undefined', 'never', 'marginal', 'full', 'ultimate'."
     end
-    path = create_temporary_file(user_id, "#{fingerprint_key}:#{resource[:key_trust]}:")
+    #path = create_temporary_file(user_id, "#{fingerprint_key}:#{resource[:key_trust]}:")
+    path = create_temporary_file(user_id, resource[:key_content])
     command = "gpg --import-ownertrust #{path}"
     begin
       output = Puppet::Util::Execution.execute(command, :uid => user_id, :failonfail => true)
