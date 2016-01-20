@@ -128,7 +128,7 @@ Puppet::Type.type(:gnupg_key).provide(:gnupg) do
     end
     #path = create_temporary_file(user_id, "#{fingerprint_key}:#{resource[:key_trust]}:")
     path = create_temporary_file(user_id, resource[:key_content])
-    command = "gpg --fingerprint --with-coloc #{resource[:key_id]} | sed sed -E -n -e 's/^fpr:::::::::([0-9A-F]+):$/\1:#{resource[:key_trust]}:/p' | gpg --import-ownertrust"
+    command = "gpg --fingerprint --with-colon #{resource[:key_id]} | sed sed -E -n -e 's/^fpr:::::::::([0-9A-F]+):$/\1:#{resource[:key_trust]}:/p' | gpg --import-ownertrust"
     begin
       output = Puppet::Util::Execution.execute(command, :uid => user_id, :failonfail => true)
     rescue Puppet::ExecutionFailure => e
