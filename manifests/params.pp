@@ -14,7 +14,7 @@ class gnupg::params {
       $package_name = 'gpg2'
     }
     'Archlinux': {
-      $package_name = 'gpg2'
+      $package_name ='gnupg'
     }
     'Linux': {
       if $::operatingsystem == 'Amazon' {
