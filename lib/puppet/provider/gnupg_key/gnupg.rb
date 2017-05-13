@@ -70,7 +70,12 @@ Puppet::Type.type(:gnupg_key).provide(:gnupg) do
 
   def add_key_from_key_content
     path = create_temporary_file(user_id, resource[:key_content])
-    command = "gpg --import #{path}"
+    if Facter.value(:gnupg_version).to_i >= 2
+      command = "gpg --batch --no-tty --passphrase-file #{resource[:passphrase_file]} --import #{path}"
+    else
+      command = "gpg --import #{path}"
+    end
+
     begin
       output = Puppet::Util::Execution.execute(command, :uid => user_id, :failonfail => true)
     rescue Puppet::ExecutionFailure => e

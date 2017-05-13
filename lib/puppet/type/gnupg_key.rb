@@ -147,6 +147,10 @@ Puppet::Type.newtype(:gnupg_key) do
     desc "Trust level of the key to add.  should be a number 1-6"
   end
 
+  newparam(:passphrase_file) do
+    desc "Location of a passphrase file for importing a key"
+  end
+
   newparam(:key_type) do
     desc "The type of the key(s) being managed."
 
